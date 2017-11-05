@@ -9,3 +9,8 @@
 .App-intro {
   font-size: large;
 }
+
+a {
+  color : white ;
+  text-decoration: none;
+}

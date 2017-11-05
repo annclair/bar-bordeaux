@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -31,21 +32,20 @@ class BarList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: [],
+            items: []
         };
     }
 
     componentDidMount() {
         foursquare.venues.getVenues(params)
             .then(res => {
-                console.log(res.response)
                 this.setState({ items: res.response.venues });
             });
     }
 
     render() {
         const { classes } = this.props;
-        const { dense, secondary } = this.state;
+        const { dense } = this.state;
 
         return (
             <div>
@@ -57,9 +57,11 @@ class BarList extends Component {
                                 <div className={classes.demo}>
                                     <List dense={dense}>
                                             <ListItem button>
-                                                <ListItemText
-                                                primary={item.name}
-                                                />
+                                                <Link to={`/${item.id}`}>
+                                                    <ListItemText
+                                                    primary={item.name}
+                                                    />
+                                                </Link>
                                             </ListItem>
                                     </List>
                                 </div>

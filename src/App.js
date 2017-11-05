@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // imports components 
 import NavBar from './components/NavBar'
-import BarList from './components/BarList'
+import Layout from './components/Layout'
 
 // import style
 import './App.css';
@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar />
-        <BarList />
+        <Layout />
       </div>
     );
   }
