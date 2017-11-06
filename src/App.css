@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: rgb(223, 223, 222);
 }
 
 .App-title {
@@ -18,4 +19,9 @@ a {
 .leaflet-container {
     height: 600px;
     width: 100%;
+}
+
+.blocPage {
+  max-width: 1500px;
+  margin:auto;
 }

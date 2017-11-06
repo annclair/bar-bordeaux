@@ -5,15 +5,21 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
 import Grid from 'material-ui/Grid';
-import List, {
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-} from 'material-ui/List';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
-    demo: {
-        background: theme.palette.background.paper,
+    root: {
+        marginTop: 30
+    },
+    card: {
+        minWidth: 275,
+        margin : 10
+    },
+    pos: {
+        marginTop: 30,
+        color: theme.palette.text.secondary,
     }
 });
 
@@ -39,32 +45,36 @@ class BarList extends Component {
     componentDidMount() {
         foursquare.venues.getVenues(params)
             .then(res => {
+                console.log(res)
                 this.setState({ items: res.response.venues });
             });
     }
 
     render() {
         const { classes } = this.props;
-        const { dense } = this.state;
-
+        
         return (
-            <div>
+            <div className="blocPage">
                 <h1>Les bars de Bordeaux :</h1>
-                <Grid container>
+                <Grid container className={classes.root}>
                     {this.state.items.map(item => {
                         return (
-                            <Grid key={item.id} item xs={12} md={6}>
-                                <div className={classes.demo}>
-                                    <List dense={dense}>
-                                            <ListItem button>
-                                                <Link to={`/${item.id}`}>
-                                                    <ListItemText
-                                                    primary={item.name}
-                                                    />
-                                                </Link>
-                                            </ListItem>
-                                    </List>
-                                </div>
+                            <Grid key={item.id} item xs={12} sm={6} md={4}>
+                                <Card className={classes.card} >
+                                    <CardContent>
+                                        <Typography type="headline" component="h1">
+                                            {item.name}
+                                        </Typography>
+                                        <Typography type="body1" className={classes.pos}>
+                                            Adresse : {item.location ? item.location.address : 'non renseigné'}
+                                        </Typography>
+                                    </CardContent>
+                                    <CardActions>
+                                        <Link to={`/${item.id}`}>
+                                            <Button dense>Learn More</Button>
+                                        </Link>
+                                    </CardActions>
+                                </Card>
                             </Grid>
                         )
                     })}
