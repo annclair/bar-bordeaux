@@ -7,12 +7,10 @@ import BarMap from './BarMap'
 
 const Layout = () => (
     <div>
-
         <Switch>
             <Route exact path='/' component={BarList} />
             <Route exact path='/map' component={BarMap} />
             <Route path='/:id' component={BarInfo} />
-            <Route exact path='/map' component={BarMap} />
         </Switch>
     </div>
 )
