@@ -9,6 +9,11 @@ import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 
+import TextField from 'material-ui/TextField';
+import Icon from 'material-ui/Icon';
+import SearchIcon from 'material-ui-icons/Search';
+
+
 const styles = theme => ({
     root: {
         marginTop: 30
@@ -19,7 +24,7 @@ const styles = theme => ({
     },
     pos: {
         marginTop: 30,
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.secondary
     }
 });
 
@@ -38,7 +43,8 @@ class BarList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: []
+            items: [],
+            search: ''
         };
     }
 
@@ -50,23 +56,47 @@ class BarList extends Component {
             });
     }
 
+    searchList(event) {
+        this.setState({search: event.target.value});
+    }
+
     render() {
         const { classes } = this.props;
         
+        let filteredBars = this.state.items.filter(
+            (bar) => {
+                return bar.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+            }
+        );
+        
         return (
             <div className="blocPage">
+                <form noValidate>
+                    <TextField
+                        id="search"
+                        label="Rechercher un bar"
+                        type="search"
+                        margin="normal"
+                        onChange={this.searchList.bind(this)}
+                    />
+                    <Icon color="primary"
+                        aria-label="Search">
+                        <SearchIcon />
+                    </Icon>
+                </form>
+
                 <h1>Les bars de Bordeaux :</h1>
                 <Grid container className={classes.root}>
-                    {this.state.items.map(item => {
+                    {filteredBars.map(item => {
                         return (
                             <Grid key={item.id} item xs={12} sm={6} md={4}>
-                                <Card className={classes.card} >
+                                <Card className={classes.card}>
                                     <CardContent>
                                         <Typography type="headline" component="h1">
                                             {item.name}
                                         </Typography>
                                         <Typography type="body1" className={classes.pos}>
-                                            Adresse : {item.location ? item.location.address : 'non renseigné'}
+                                            Adresse : {item.location.address ? item.location.address : 'non renseignée'}
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
