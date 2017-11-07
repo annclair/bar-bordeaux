@@ -105,7 +105,7 @@ class BarList extends Component {
                                     </CardContent>
                                     <CardActions>
                                         <Link to={`/${bar.id}`}>
-                                            <Button dense>Learn More</Button>
+                                            <Button dense>Voir + d'infos</Button>
                                         </Link>
                                     </CardActions>
                                 </Card>
