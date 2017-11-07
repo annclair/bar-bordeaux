@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom' ;
 
-import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -17,25 +16,24 @@ const styles = theme => ({
     }
 });
 
-function SimpleAppBar(props) {
-    const { classes } = props;
-    return (
-        <div className={classes.root}>
-            <AppBar position="static" >
-                <Toolbar>
-                        <Typography type="title" color="inherit" className={classes.flex}>
-                            <Link to='/'>Les bars de Bordeaux</Link>
-                        </Typography>
-                        <Button color="contrast"><Link to='/'>Liste</Link></Button>
-                        <Button color="contrast"><Link to='/map'>Carte</Link></Button>
-                </Toolbar>
-            </AppBar>
-        </div>
-    );
+class NavBar extends Component {
+
+    render() {
+        const { classes } = this.props;
+        return (
+            <div className={classes.root}>
+                <AppBar position="static" >
+                    <Toolbar>
+                            <Typography type="title" color="inherit" className={classes.flex}>
+                                <Link to='/'>Les bars de Bordeaux</Link>
+                            </Typography>
+                            <Button color="contrast"><Link to='/'>Liste</Link></Button>
+                            <Button color="contrast"><Link to='/map'>Carte</Link></Button>
+                    </Toolbar>
+                </AppBar>
+            </div>
+        );
+    }
 }
 
-SimpleAppBar.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(SimpleAppBar);
+export default withStyles(styles)(NavBar);
