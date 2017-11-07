@@ -1,7 +1,44 @@
 import React, { Component } from 'react';
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+
+import Grid from 'material-ui/Grid';
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import Typography from 'material-ui/Typography';
+import Divider from 'material-ui/Divider';
+
+const styles = theme => ({
+    root: {
+        marginTop: 30,
+        height : "auto"
+    },
+    card: {
+        margin: 10,
+        minHeight : 500
+    },
+    pos: {
+        marginTop: 30,
+        color: theme.palette.text.secondary
+    },
+    body:{
+        margin: 10,
+    },
+    map: {
+        height : 240
+    },
+    titles: {
+        paddingTop : 10
+    },
+    noImage: {
+        margin: 10,
+        height : 500
+    },
+    image: {
+        margin: 10
+    }
+});
 
 var foursquare = require('react-foursquare')({
     clientID: 'WTTC3AA3JUSCYVI2K3P4JLU04RBSRAVC4RL0KVNQIVUCHTWZ',
@@ -19,7 +56,8 @@ class BarInfo extends Component {
             likes: [],
             price: [],
             picture: [],
-            attributes: []
+            attributes: [],
+            zoom: 18
         };
     }
     
@@ -35,31 +73,68 @@ class BarInfo extends Component {
                     likes: res.response.venue.likes,
                     price: res.response.venue.price,
                     picture: res.response.venue.bestPhoto,
-                    attributes: res.response.venue.attributes.groups
+                    attributes: res.response.venue.attributes.groups,
+                    position : [res.response.venue.location.lat, res.response.venue.location.lng] 
                 });
             });
     }
 
     render() {
+        const { classes } = this.props;
+
+        console.log(this.state.attributes)
         return (
-            <div>
-                <h1>Infos sur le bar choisi</h1>
-                <p>{this.state.item.name}</p>
-                <p>{this.state.address.address}</p>
-                <p>{this.state.contact.formattedPhone}</p>
-                <p>Recommandations : {this.state.likes.count}</p>
-                <p>{this.state.price.message} {this.state.price.tier}</p>
-                <img src={this.state.picture.prefix + '300x500' + this.state.picture.suffix} alt=""/>
-                {/* <ul> {this.state.attributes.map(el => {
-                    return (
-                        <li key={el.count}>{el.count} {el.name}</li>
-                    )
-                })
-                }</ul> */}
+            <div container className="blocPage">
+                <div>
+                    <Grid container className={classes.root}>
+                        <Grid item xs={12} sm={5}>
+                            {this.state.picture ? <img src={this.state.picture.prefix + '300x500' + this.state.picture.suffix} className={classes.image}/> : <p className={classes.noImage}>Image non disponible</p>}
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Card className={classes.card}>
+                                <CardContent>
+                                    <Typography type="headline" component="h1">
+                                        Infos sur : {this.state.item.name} <br/>
+                                    </Typography>
+                                    <Typography type="body1" className={classes.pos}>
+                                        {this.state.item.description}
+                                    </Typography>
+                                    <Divider light />
+                                    <Typography type="body1" component="p" className={classes.body}>
+                                        Prix : {this.state.price ? this.state.price.message : "Non renseigné"} <br/>
+                                       {this.state.likes ? this.state.likes.count + " recommandations" : "Aucune recommandation"}
+                                    </Typography>
+                                    <Typography type="headline" component="h3" className={classes.titles}>
+                                        Ses caractéristiques :
+                                    </Typography>
+                                    {this.state.attributes.map(el => {
+                                        return (
+                                            <Typography component="p" > {el.summary}</Typography>
+                                        )
+                                    })}
+                                    <Divider light />
+                                    <Typography type="body1" className={classes.pos}>
+                                        Adresse : {this.state.address.address || 'Non renseigné'} <br />
+                                        Téléphone : {this.state.contact.formattedPhone || 'Non renseigné'}
+                                    </Typography>
+                                    <Map center={this.state.position} zoom={this.state.zoom} className={classes.map}>
+                                        <TileLayer
+                                            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                        />
+                                        <Marker position={this.state.position}>
+                                        </Marker>
+                                    </Map>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                </div>
             </div>
 
         )
     }
 }
 
-export default BarInfo
+
+export default withStyles(styles)(BarInfo);
