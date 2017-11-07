@@ -8,7 +8,7 @@ import Icon from 'material-ui/Icon';
 import SearchIcon from 'material-ui-icons/Search';
 import Typography from 'material-ui/Typography';
 
-var foursquare = require('react-foursquare')({
+var foursquare = require('@haroenv/react-foursquare')({
     clientID: 'WTTC3AA3JUSCYVI2K3P4JLU04RBSRAVC4RL0KVNQIVUCHTWZ',
     clientSecret: 'UBA21K3XTF3Q3MCQPZBK1ZYZ0HTUV4OUWEVZ0YYLOCGS41E1'
 });

@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@haroenv/react-foursquare": "^1.1.0",
     "leaflet": "^1.2.0",
     "material-ui": "^1.0.0-beta.19",
     "material-ui-icons": "^1.0.0-beta.17",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-foursquare": "^1.0.3",
     "react-leaflet": "^1.7.3",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.16"
