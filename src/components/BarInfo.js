@@ -102,7 +102,7 @@ class BarInfo extends Component {
                                     <Divider light />
                                     <Typography type="body1" component="p" className={classes.body}>
                                         Prix : {this.state.price ? this.state.price.message : "Non renseigné"} <br/>
-                                       {this.state.likes ? this.state.likes.count + " recommandations" : "Aucune recommandation"}
+                                        {this.state.likes ? this.state.likes.count + " recommandation" + (this.state.likes.count > 1 ? "s" : "") : "Aucune recommandation"}
                                     </Typography>
                                     <Typography type="headline" component="h3" className={classes.titles}>
                                         Ses caractéristiques :
